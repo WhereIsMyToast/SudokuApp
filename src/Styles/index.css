@@ -12,7 +12,8 @@ body {
 /* Styles for tables */
 table {
   border-collapse: collapse; /* Collapse borders for table cells */
-  margin: 20px; /* Add margin around the table */
+  margin: auto; /* Center the table  */
+  
 }
 
 /* Styles for table cells */

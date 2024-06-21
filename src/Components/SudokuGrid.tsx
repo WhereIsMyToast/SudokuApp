@@ -3,6 +3,7 @@ import SudokuCell from "./SudokuCell";
 import { invoke } from "@tauri-apps/api";
 import { message } from "@tauri-apps/api/dialog";
 import { listen } from "@tauri-apps/api/event";
+import { compareGrids, testEmpty } from "../Util/Util";
 
 const SudokuGrid = () => {
   //State hooks
@@ -61,18 +62,6 @@ const SudokuGrid = () => {
     setSolved(s);
   }
 
-  //Check if grid is empty
-  function testEmpty(grid: number[][]) {
-    for (let i = 0; i < grid.length; i++) {
-      for (let j = 0; j < grid[i].length; j++) {
-        if (grid[i][j] !== 0) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
   //Fetch a new grid from backend
   async function fetchGrid() {
     let grid: number[][] = await invoke("generate_new_grid", {});
@@ -85,24 +74,6 @@ const SudokuGrid = () => {
     await message(
       isCorrect ? "Resuelto correctamente" : "Está mal, vuelve a intentarlo"
     );
-  }
-
-  //Compare two grids
-  function compareGrids(g1: number[][], g2: number[][]) {
-    if (g1.length !== g2.length) {
-      return false;
-    }
-    for (let i = 0; i < g1.length; i++) {
-      if (g1[i].length !== g2[i].length) {
-        return false;
-      }
-      for (let j = 0; j < g1[i].length; j++) {
-        if (g1[i][j] !== g2[i][j]) {
-          return false;
-        }
-      }
-    }
-    return true;
   }
 
   //Update grid and lockedGrid state
