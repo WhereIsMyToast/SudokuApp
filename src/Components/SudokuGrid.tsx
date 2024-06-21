@@ -159,15 +159,17 @@ const SudokuGrid = () => {
       <table id="sudoku-grid">
         <tbody>{getGridElements(grid)}</tbody>
       </table>
-      <button id="check-button" onClick={handleCheckClick}>
-        Check
-      </button>
-      <button id="reset-button" onClick={handleResetClick}>
-        Reset
-      </button>
-      <button id="solve-button" onClick={handleSolveClick}>
-        Solve
-      </button>
+      <div id="button-container">
+        <button id="check-button" onClick={handleCheckClick}>
+          Check
+        </button>
+        <button id="reset-button" onClick={handleResetClick}>
+          Reset
+        </button>
+        <button id="solve-button" onClick={handleSolveClick}>
+          Solve
+        </button>
+      </div>
     </div>
   );
 };

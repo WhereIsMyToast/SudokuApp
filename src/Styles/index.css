@@ -4,7 +4,7 @@ body {
   flex-direction: column; /* Arrange items vertically */
   justify-content: center; /* Center items vertically */
   align-items: center; /* Center items horizontally */
-  height: 100vh; /* Full viewport height */
+  height: 90vh; /* Full viewport height */
   background-color: #f7f7f7; /* Light gray background */
   font-family: Arial, sans-serif; /* Use Arial or sans-serif font */
 }
@@ -52,4 +52,13 @@ button {
   padding: 10px 20px; /* Padding inside buttons */
   font-size: 16px; /* Font size of button text */
   cursor: pointer; /* Cursor style on hover */
+  margin: auto;
+}
+
+#button-container{
+  text-align: center;
+}
+
+#button-container button {
+  margin: 20px;
 }
