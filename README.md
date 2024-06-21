@@ -51,7 +51,7 @@ Or solve it yourself, and check if the soultion is right.
 
 ## Future changes
 
-- [x] Fix frontend
+- [ ] Fix frontend
 - [ ] Add hints
 - [ ] Dark mode
 
