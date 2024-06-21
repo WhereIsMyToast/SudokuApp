@@ -3,7 +3,7 @@ import SudokuCell from "./SudokuCell";
 import { invoke } from "@tauri-apps/api";
 import { message } from "@tauri-apps/api/dialog";
 import { listen } from "@tauri-apps/api/event";
-import { compareGrids, testEmpty } from "../Util/Util";
+import { compareGrids, randomInt, testEmpty } from "../Util/Util";
 
 const SudokuGrid = () => {
   //State hooks
@@ -99,6 +99,18 @@ const SudokuGrid = () => {
     updateSolveGrid(solved);
   }
 
+  function handleHintClick(tries: number) {
+    let i: number = randomInt(9);
+    let j: number = randomInt(9);
+    if (grid[i][j] === 0 || tries > 81) {
+      let temp = [...grid];
+      temp[i][j] = solved[i][j];
+      setGrid(temp);
+      return;
+    }
+    handleHintClick(++tries);
+  }
+
   //Render SudokuCell components based on grid state
   function getGridElements(grid: number[][]) {
     return grid.map((row, i) => (
@@ -139,6 +151,14 @@ const SudokuGrid = () => {
         </button>
         <button id="solve-button" onClick={handleSolveClick}>
           Solve
+        </button>
+        <button
+          id="hint-button"
+          onClick={() => {
+            handleHintClick(0);
+          }}
+        >
+          Hint
         </button>
       </div>
     </div>
