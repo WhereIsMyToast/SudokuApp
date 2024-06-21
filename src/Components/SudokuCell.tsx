@@ -1,5 +1,5 @@
 import React from "react";
-import "./SudokuCell.css"; //Import CSS file for styling
+import "../Styles/SudokuCell.css"; //Import CSS file for styling
 
 interface SudokuCellProps {
   number: number;
