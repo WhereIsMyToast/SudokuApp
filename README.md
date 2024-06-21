@@ -1,35 +1,41 @@
-#SudokuApp
+# SudokuApp
+
 SudokuApp is a simple yet powerful Sudoku application featuring custom algorithms to generate and solve Sudoku boards. This project is built using Tauri, with a modern frontend in **Vite**, **React**, and **TypeScript**, and a robust backend in **Rust**.
 
-##Features
+## Features
+
 Custom Sudoku Generation: Create unique Sudoku puzzles of varying difficulty levels.
 Sudoku Solver: Solve any Sudoku board using advanced algorithms.
 Modern Frontend: Built with Vite, React, and TypeScript for a dynamic user experience.
 Robust Backend: Powered by Rust for high performance and reliability.
-##Installation
-###Clone the Repository:
+
+## Installation
+
+### Clone the Repository:
 
 ```
 git clone https://github.com/WhereIsMyToast/SudokuApp
 cd SudokuApp
 ```
 
-###Install Dependencies:
+### Install Dependencies:
 
 ```
 npm install
 ```
 
-###Build and Run the Application:
+### Build and Run the Application:
 
 ```
 cargo tauri dev
 ```
 
-##Usage
+## Usage
+
 Launch the application and generate a new Sudoku puzzle.
 Utilize the solving feature to get immediate solutions for any valid Sudoku board.
 Or solve it yourself, and check if the soultion is right.
 
-###Contributing
+### Contributing
+
 We welcome contributions!.
