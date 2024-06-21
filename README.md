@@ -51,12 +51,10 @@ Or solve it yourself, and check if the soultion is right.
 
 ## Future changes
 
-```diff
 - [x] Fix frontend
 - [x] Add hints
 - - [ ] Add animation on hints
 - [ ] Dark mode
-```
 
 ### Contributing
 
