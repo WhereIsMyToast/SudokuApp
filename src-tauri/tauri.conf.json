@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "sudoku-vite",
+    "productName": "SudokuApp",
     "version": "0.1.0"
   },
   "tauri": {
