@@ -1,54 +1,62 @@
+/* Base styles for Sudoku cells */
 .sudoku-cell {
-  width: 40px;
-  height: 40px;
-  text-align: center;
-  vertical-align: middle;
-  background-color: white;
-  
+  width: 40px; /* Fixed width */
+  height: 40px; /* Fixed height */
+  text-align: center; /* Center text horizontally */
+  vertical-align: middle; /* Center content vertically */
+  background-color: white; /* Default background color */
 }
 
+/* Common border styles for Sudoku cells */
 .sudoku-cell {
-  border-right-width: 1px;
-  border-bottom-width: 1px;
+  border-right-width: 1px; /* Default right border width */
+  border-bottom-width: 1px; /* Default bottom border width */
 }
 
+/* Additional styles for cells at the end of rows and columns */
 .sudoku-cell.last-in-row {
-  border-right-width: 1px;
+  border-right-width: 1px; /* Right border for cells at the end of rows */
 }
 
 .sudoku-cell.last-in-column {
-  border-bottom-width: 1px;
+  border-bottom-width: 1px; /* Bottom border for cells at the end of columns */
 }
 
+/* Additional styles for cells with thicker borders */
 .sudoku-cell.thick-border-right {
-  border-right-width: 2px;
+  border-right-width: 2px; /* Thicker right border */
 }
 
 .sudoku-cell.thick-border-bottom {
-  border-bottom-width: 2px;
+  border-bottom-width: 2px; /* Thicker bottom border */
 }
 
-
-
-.rowColmarked{
-  background-color: #def3fa;
+/* Styles for cells marked as part of a row or column */
+.rowColmarked {
+  background-color: #def3fa; /* Light blue background */
 }
 
+/* Styles for input elements */
 input {
-  background-color: inherit;
+  background-color: inherit; /* Inherit background color */
 }
 
+/* Styles for div elements */
 div {
-  background-color: inherit;
+  background-color: inherit; /* Inherit background color */
 }
+
+/* Styles for locked cells */
 .locked {
-  background-color: #dbdbdb;
-}
-.rowColmarked.locked{
-  background-color: #dbdbdb
+  background-color: #dbdbdb; /* Light gray background */
 }
 
+/* Styles for locked cells that are also marked */
+.rowColmarked.locked {
+  background-color: #dbdbdb; /* Light gray background */
+}
 
+/* Styles for cells that are marked */
 .marked {
-  background-color: #7bc9e3;
+  background-color: #7bc9e3; /* Blue background */
 }

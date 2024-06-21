@@ -1,48 +1,55 @@
+/* Styles for the body */
 body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f7f7f7;
-  font-family: Arial, sans-serif;
+  display: flex; /* Use flexbox layout */
+  flex-direction: column; /* Arrange items vertically */
+  justify-content: center; /* Center items vertically */
+  align-items: center; /* Center items horizontally */
+  height: 100vh; /* Full viewport height */
+  background-color: #f7f7f7; /* Light gray background */
+  font-family: Arial, sans-serif; /* Use Arial or sans-serif font */
 }
 
+/* Styles for tables */
 table {
-  border-collapse: collapse;
-  margin: 20px;
+  border-collapse: collapse; /* Collapse borders for table cells */
+  margin: 20px; /* Add margin around the table */
 }
 
+/* Styles for table cells */
 td {
-  border: 1px solid #000;
-  width: 40px;
-  height: 40px;
-  text-align: center;
-  font-size: 20px;
-  line-height: 40px;
-  padding: 0;
+  border: 1px solid #000; /* Black border around cells */
+  width: 40px; /* Fixed width for cells */
+  height: 40px; /* Fixed height for cells */
+  text-align: center; /* Center text horizontally */
+  font-size: 20px; /* Font size of text */
+  line-height: 40px; /* Line height for vertical centering */
+  padding: 0; /* Remove padding inside cells */
 }
 
+/* Styles for input elements inside table cells */
 td input {
-  width: 100%;
-  height: 100%;
-  border: none;
-  text-align: center;
-  font-size: 20px;
-  box-sizing: border-box;
+  width: 100%; /* Take full width of parent cell */
+  height: 100%; /* Take full height of parent cell */
+  border: none; /* Remove default input border */
+  text-align: center; /* Center text horizontally */
+  font-size: 20px; /* Font size of text */
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
+/* Additional styles for table cells with right border */
 .bold-border-right {
-  border-right: 2px solid #000;
+  border-right: 2px solid #000; /* Bold right border */
 }
 
+/* Additional styles for table cells with bottom border */
 .bold-border-bottom {
-  border-bottom: 2px solid #000;
+  border-bottom: 2px solid #000; /* Bold bottom border */
 }
 
+/* Styles for buttons */
 button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
+  margin-top: 20px; /* Margin on top of buttons */
+  padding: 10px 20px; /* Padding inside buttons */
+  font-size: 16px; /* Font size of button text */
+  cursor: pointer; /* Cursor style on hover */
 }
