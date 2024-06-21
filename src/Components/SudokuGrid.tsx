@@ -16,6 +16,10 @@ const SudokuGrid = () => {
   const [marked, setMarked] = useState(0);
   const [rowMarked, setRowMarked] = useState(0);
   const [colMarked, setColMarked] = useState(0);
+  const [hintedCell, setHintedCell] = useState<{
+    row: number;
+    col: number;
+  } | null>(null);
 
   //Refs to hold current grid and locked grid values
   const gridRef = useRef(grid);
@@ -106,6 +110,10 @@ const SudokuGrid = () => {
       let temp = [...grid];
       temp[i][j] = solved[i][j];
       setGrid(temp);
+      setHintedCell({ row: i, col: j });
+      setTimeout(() => {
+        setHintedCell(null);
+      }, 1000);
       return;
     }
     handleHintClick(++tries);
@@ -130,6 +138,7 @@ const SudokuGrid = () => {
             locked={lockedGrid[i][j]}
             grid={grid}
             setGrid={setGrid}
+            hinted={hintedCell}
           />
         ))}
       </tr>

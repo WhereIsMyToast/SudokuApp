@@ -53,7 +53,7 @@ Or solve it yourself, and check if the soultion is right.
 
 - [x] Fix frontend
 - [x] Add hints
-- - [ ] Add animation on hints
+- - [x] Add animation on hints
 - [ ] Dark mode
 
 ### Contributing

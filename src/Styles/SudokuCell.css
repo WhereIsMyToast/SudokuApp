@@ -60,3 +60,17 @@ div {
 .marked {
   background-color: #7bc9e3; /* Blue background */
 }
+
+
+@keyframes hintAnimation {
+  from {
+    background-color: rgb(145, 242, 145);
+  }
+  to {
+    background-color: transparent;
+  }
+}
+
+.hint {
+  animation: hintAnimation 1s forwards;
+}

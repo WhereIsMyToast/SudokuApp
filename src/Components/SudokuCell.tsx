@@ -14,6 +14,7 @@ interface SudokuCellProps {
   setRowMarked: React.Dispatch<React.SetStateAction<number>>;
   colMarked: number;
   setColMarked: React.Dispatch<React.SetStateAction<number>>;
+  hinted: { col: number; row: number } | null;
 }
 
 const SudokuCell: React.FC<SudokuCellProps> = ({
@@ -29,6 +30,7 @@ const SudokuCell: React.FC<SudokuCellProps> = ({
   setRowMarked,
   colMarked,
   setColMarked,
+  hinted,
 }) => {
   //Function to determine the content inside the cell
   function getInside() {
@@ -78,6 +80,19 @@ const SudokuCell: React.FC<SudokuCellProps> = ({
   const isMarked = number === marked;
   const isRowColMarked = row === rowMarked || col === colMarked;
 
+  function isHinted() {
+    if (hinted == null) {
+      return false;
+    }
+    if (row != hinted.row) {
+      return false;
+    }
+    if (col != hinted.col) {
+      return false;
+    }
+    return true;
+  }
+
   //Construct the className string based on conditions
   const cellClassName = `sudoku-cell${isLastInRow ? " last-in-row" : ""}${
     isLastInColumn ? " last-in-column" : ""
@@ -85,7 +100,7 @@ const SudokuCell: React.FC<SudokuCellProps> = ({
     isThickBorderBottom ? " thick-border-bottom" : ""
   }${locked && !isMarked ? " locked" : ""}${
     isMarked && number ? " marked" : ""
-  }${isRowColMarked ? " rowColmarked" : ""}`;
+  }${isRowColMarked ? " rowColmarked" : ""}${isHinted() ? " hint" : ""}`;
 
   //Render the cell with appropriate className and content
   return <td className={cellClassName}>{getInside()}</td>;
