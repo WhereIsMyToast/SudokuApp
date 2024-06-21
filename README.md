@@ -13,6 +13,7 @@ SudokuApp is a simple yet powerful Sudoku application featuring custom algorithm
 
 ```diff
 - IMPORTANT: Installing a release is a lot faster generating puzzles; installing is recommended.
+- To install go to the releases tab and follow the steps.
 ```
 
 ### Clone the Repository:
