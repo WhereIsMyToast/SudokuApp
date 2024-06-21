@@ -4,26 +4,29 @@ use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
 
+//Structure representing a Sudoku grid
 pub struct Grid {
     pub grid: [[u8; 9]; 9],
 }
 
 impl Grid {
+    //Constructor for Grid
     pub fn new() -> Self {
         Grid { grid: [[0; 9]; 9] }
     }
 
+    //Checks if placing 'num' at grid[row][col] is safe
     fn is_safe(&self, row: usize, col: usize, num: u8) -> bool {
+        //Check row and column
         for x in 0..9 {
             if self.grid[row][x] == num {
                 return false;
             }
-        }
-        for x in 0..9 {
             if self.grid[x][col] == num {
                 return false;
             }
         }
+        //Check 3x3 box
         let start_row = row - row % 3;
         let start_col = col - col % 3;
         for i in 0..3 {
@@ -36,20 +39,22 @@ impl Grid {
         true
     }
 
+    //Solves the Sudoku grid
     pub fn solve(&mut self) -> bool {
         self.solve_from(0, 0)
     }
 
+    //Recursive function to solve the grid from a specific position
     fn solve_from(&mut self, row: usize, col: usize) -> bool {
         const SIZE: usize = 9;
         if row == SIZE - 1 && col == SIZE {
-            return true;
+            return true; //Entire grid solved
         }
         if col == SIZE {
-            return self.solve_from(row + 1, 0);
+            return self.solve_from(row + 1, 0); //Move to next row
         }
         if self.grid[row][col] > 0 {
-            return self.solve_from(row, col + 1);
+            return self.solve_from(row, col + 1); //Skip already filled cells
         }
         for num in 1..=9 {
             if self.is_safe(row, col, num) {
@@ -63,6 +68,7 @@ impl Grid {
         false
     }
 
+    //Fills the grid (used for generating new puzzles)
     fn fill_grid(&mut self) -> bool {
         let mut nums: Vec<u8> = (1..=9).collect();
         let mut rng = thread_rng();
@@ -87,6 +93,7 @@ impl Grid {
         true
     }
 
+    //Counts the number of solutions for the grid
     fn count_solutions(&mut self, row: usize, col: usize, count: &mut u32) -> bool {
         const SIZE: usize = 9;
         if row == SIZE - 1 && col == SIZE {
@@ -112,6 +119,7 @@ impl Grid {
         false
     }
 
+    //Generates a puzzle by filling the grid and removing numbers
     pub fn generate_puzzle(&mut self) {
         self.fill_grid();
 
@@ -133,6 +141,7 @@ impl Grid {
     }
 }
 
+//Implementation of Clone trait for Grid
 impl Clone for Grid {
     fn clone(&self) -> Grid {
         Grid {
@@ -141,19 +150,23 @@ impl Clone for Grid {
     }
 }
 
+//Queue structure to store generated grids
 struct Queue {
     data: Vec<Grid>,
 }
 
 impl Queue {
+    //Constructor for Queue
     fn new() -> Self {
         Queue { data: Vec::new() }
     }
 
+    //Enqueues a grid into the queue
     fn enqueue(&mut self, grid: Grid) {
         self.data.push(grid);
     }
 
+    //Dequeues a grid from the queue
     fn dequeue(&mut self) -> Option<Grid> {
         if self.data.is_empty() {
             None
@@ -162,16 +175,19 @@ impl Queue {
         }
     }
 
+    //Returns the number of grids in the queue
     fn len(&self) -> usize {
         self.data.len()
     }
 }
 
+//Structure to manage a collection of generated grids
 pub struct NewGridsData {
     stored: Arc<Mutex<Queue>>,
 }
 
 impl NewGridsData {
+    //Constructor for NewGridsData
     pub fn new() -> Self {
         let n = NewGridsData {
             stored: Arc::new(Mutex::new(Queue::new())),
@@ -180,6 +196,7 @@ impl NewGridsData {
         n
     }
 
+    //Launches a background process to generate new grids
     fn launch_process(&self) {
         let stored = Arc::clone(&self.stored);
         thread::spawn(move || loop {
@@ -193,19 +210,18 @@ impl NewGridsData {
                 grid.generate_puzzle();
                 {
                     let mut queue = stored.lock().unwrap();
-                    println!("Produced grid");
                     queue.enqueue(grid);
                 }
             } else {
-                println!("Queue is full");
                 thread::sleep(Duration::from_secs(1));
             }
         });
     }
+
+    //Retrieves a grid from the queue
     pub fn get_grid(&self) -> Option<Grid> {
         let stored = Arc::clone(&self.stored);
         {
-            println!("Consumed Grid");
             let mut queue = stored.lock().unwrap();
             queue.dequeue()
         }
