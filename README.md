@@ -11,6 +11,10 @@ SudokuApp is a simple yet powerful Sudoku application featuring custom algorithm
 
 ## Installation
 
+```diff
+- IMPORTANT: Installing a release is a lot faster generating puzzles; installing is recommended.
+```
+
 ### Clone the Repository:
 
 ```
@@ -24,11 +28,19 @@ cd SudokuApp
 npm install
 ```
 
-### Build and Run the Application:
+### Run the Application:
 
 ```
 cargo tauri dev
 ```
+
+## Building the app
+
+```
+cargo tauri build
+```
+
+And the install one of the bundles created.
 
 ## Usage
 
