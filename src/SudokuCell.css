@@ -1,0 +1,54 @@
+.sudoku-cell {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: white;
+  
+}
+
+.sudoku-cell {
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+}
+
+.sudoku-cell.last-in-row {
+  border-right-width: 1px;
+}
+
+.sudoku-cell.last-in-column {
+  border-bottom-width: 1px;
+}
+
+.sudoku-cell.thick-border-right {
+  border-right-width: 2px;
+}
+
+.sudoku-cell.thick-border-bottom {
+  border-bottom-width: 2px;
+}
+
+
+
+.rowColmarked{
+  background-color: #def3fa;
+}
+
+input {
+  background-color: inherit;
+}
+
+div {
+  background-color: inherit;
+}
+.locked {
+  background-color: #dbdbdb;
+}
+.rowColmarked.locked{
+  background-color: #dbdbdb
+}
+
+
+.marked {
+  background-color: #7bc9e3;
+}
