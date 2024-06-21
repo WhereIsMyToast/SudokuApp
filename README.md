@@ -4,10 +4,10 @@ SudokuApp is a simple yet powerful Sudoku application featuring custom algorithm
 
 ## Features
 
-Custom Sudoku Generation: Create unique Sudoku puzzles of varying difficulty levels.
-Sudoku Solver: Solve any Sudoku board using advanced algorithms.
-Modern Frontend: Built with Vite, React, and TypeScript for a dynamic user experience.
-Robust Backend: Powered by Rust for high performance and reliability.
+- Custom Sudoku Generation: Create unique Sudoku puzzles, with a second thread, while using the app.
+- Sudoku Solver: Solve any Sudoku board using advanced algorithms of backtracking.
+- Modern Frontend: Built with **Vite**, **React**, and **TypeScript** for a dynamic user experience.
+- Robust Backend: Powered by **Rust** for high performance and reliability.
 
 ## Installation
 
