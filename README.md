@@ -38,4 +38,4 @@ Or solve it yourself, and check if the soultion is right.
 
 ### Contributing
 
-We welcome contributions!.
+We welcome contributions and ideas of how to upgrade the proyect!
