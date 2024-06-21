@@ -4,7 +4,7 @@
   height: 40px; /* Fixed height */
   text-align: center; /* Center text horizontally */
   vertical-align: middle; /* Center content vertically */
-  background-color: white; /* Default background color */
+  background-color:  white; /* Default background color */
 }
 
 /* Common border styles for Sudoku cells */

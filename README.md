@@ -49,6 +49,12 @@ Launch the application and generate a new Sudoku puzzle.
 Utilize the solving feature to get immediate solutions for any valid Sudoku board.
 Or solve it yourself, and check if the soultion is right.
 
+## Future changes
+
+- [ ] Fix frontend
+- [ ] Add hints
+- [ ] Dark mode
+
 ### Contributing
 
 We welcome contributions and ideas of how to upgrade the proyect!
