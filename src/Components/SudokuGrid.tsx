@@ -106,7 +106,10 @@ const SudokuGrid = () => {
   function handleHintClick(tries: number) {
     let i: number = randomInt(9);
     let j: number = randomInt(9);
-    if (grid[i][j] === 0 || tries > 81) {
+    if (tries > 81) {
+      return;
+    }
+    if (grid[i][j] === 0) {
       let temp = [...grid];
       temp[i][j] = solved[i][j];
       setGrid(temp);
