@@ -116,7 +116,7 @@ const SudokuGrid = () => {
       setHintedCell({ row: i, col: j });
       setTimeout(() => {
         setHintedCell(null);
-      }, 1000);
+      }, 500);
       return;
     }
     handleHintClick(++tries);
