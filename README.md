@@ -54,7 +54,9 @@ Or solve it yourself, and check if the soultion is right.
 - [x] Fix frontend
 - [x] Add hints
 - - [x] Add animation on hints
-- [ ] Dark mode
+- [x] Dark mode
+- - [x] Remake the ui
+- [ ] Remake the saving system
 
 ### Contributing
 

@@ -16,8 +16,8 @@
   --text-color: #cacaca;
 }
 
-body {
-  transition: all 0.3s ease-in-out;
+body{
+  transition: background-color 0.46s ease-in-out; 
 }
 
 body, input, button {

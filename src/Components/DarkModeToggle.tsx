@@ -1,5 +1,6 @@
 import { useState } from "react";
-import "../Styles/DarkModeToggle.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
 
 export function DarkModeToggle() {
   const [mode, setMode] = useState(0);
@@ -21,12 +22,11 @@ export function DarkModeToggle() {
   }
 
   return (
-    <div className="darkmodetoggle">
-      <input
-        className="toggle-checkbox"
-        type="checkbox"
-        onClick={toggleMode}
-      ></input>
-    </div>
+    <FontAwesomeIcon
+      className="darkMode__icon darkMode"
+      icon={mode === 0 ? faSun : faMoon}
+      onClick={toggleMode}
+      title="Toggle theme"
+    ></FontAwesomeIcon>
   );
 }

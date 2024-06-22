@@ -1,0 +1,7 @@
+.Container{
+    display: flex;
+}
+
+table, td, tr{
+    transition: background-color 0.46s ease-in-out; 
+}

@@ -4,8 +4,8 @@ import { invoke } from "@tauri-apps/api";
 import { message } from "@tauri-apps/api/dialog";
 import { listen } from "@tauri-apps/api/event";
 import { compareGrids, randomInt, testEmpty } from "../Util/Util";
-import { DarkModeToggle } from "./DarkModeToggle";
-
+import NavBar from "./NavBar";
+import "../Styles/SudokuGrid.css";
 const SudokuGrid = () => {
   //State hooks
   const [grid, setGrid] = useState<number[][]>([]);
@@ -151,30 +151,16 @@ const SudokuGrid = () => {
 
   //JSX to render SudokuGrid component
   return (
-    <div>
-      <DarkModeToggle></DarkModeToggle>
+    <div className="Container">
+      <NavBar
+        reset={handleResetClick}
+        solve={handleSolveClick}
+        hint={handleHintClick}
+        check={handleCheckClick}
+      ></NavBar>
       <table id="sudoku-grid">
         <tbody>{getGridElements(grid)}</tbody>
       </table>
-      <div id="button-container">
-        <button id="check-button" onClick={handleCheckClick}>
-          Check
-        </button>
-        <button id="reset-button" onClick={handleResetClick}>
-          Reset
-        </button>
-        <button id="solve-button" onClick={handleSolveClick}>
-          Solve
-        </button>
-        <button
-          id="hint-button"
-          onClick={() => {
-            handleHintClick(0);
-          }}
-        >
-          Hint
-        </button>
-      </div>
     </div>
   );
 };

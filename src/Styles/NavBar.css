@@ -1,0 +1,9 @@
+.NavBar{
+    display: flex;
+    flex-direction: column;
+    *{
+        margin:10px;
+        font-size: 2rem;
+    }
+
+}
