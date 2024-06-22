@@ -1,9 +1,20 @@
 .NavBar{
+    width: 52px;
     display: flex;
     flex-direction: column;
     *{
+        width: 32px;
+        height: 32px;
         margin:10px;
         font-size: 2rem;
     }
+    *:hover{
+        animation: grayscale 0.2s ease-in-out forwards;
+    }
+}
 
+@keyframes grayscale {
+    to {
+        color: gray;
+    }
 }

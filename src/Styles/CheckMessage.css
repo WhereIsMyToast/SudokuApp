@@ -1,0 +1,49 @@
+:root{
+    --check-color: 
+}
+
+.Cont {
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    vertical-align: middle;
+    display: flex;
+    font-size: 25rem;
+    z-index: 200;
+    color: rgb(255, 219, 219);
+    background: transparent;
+    transition: all 0.5s ease;
+    padding: 0.1em 0.2em;
+    border-radius: 0.25em;
+    animation: flash 1s linear forwards;
+
+  }
+  
+.Check{
+    filter: drop-shadow(0 0 10px rgb(107, 222, 92))
+            drop-shadow(0 0 20px rgb(107, 222, 92))
+            drop-shadow(0 0 40px rgb(107, 222, 92))
+            drop-shadow(0 0 80px rgb(107, 222, 92))
+            drop-shadow(0 0 160px rgb(107, 222, 92));    
+}
+.Cross{
+    filter: drop-shadow(0 0 10px rgb(255, 81, 81))
+            drop-shadow(0 0 20px rgb(255, 81, 81))
+            drop-shadow(0 0 40px rgb(255, 81, 81))
+            drop-shadow(0 0 80px rgb(255, 81, 81))
+            drop-shadow(0 0 160px rgb(255, 81, 81));    
+}
+
+@keyframes flash {
+    0%, 50%, 100% {
+       opacity: 1;
+    }
+    25%, 75% {
+       opacity: 0;
+    }
+ }
+
+.none{
+    display: none;
+}

@@ -25,7 +25,7 @@ const NavBar: React.FC<NavBarProps> = ({ reset, solve, hint, check }) => {
         title="Hint"
         icon={faLightbulb}
         onClick={() => {
-          hint();
+          hint(0);
         }}
       />
       <FontAwesomeIcon

@@ -6,6 +6,7 @@ import { listen } from "@tauri-apps/api/event";
 import { compareGrids, randomInt, testEmpty } from "../Util/Util";
 import NavBar from "./NavBar";
 import "../Styles/SudokuGrid.css";
+import CheckMessage from "./CheckMessage";
 const SudokuGrid = () => {
   //State hooks
   const [grid, setGrid] = useState<number[][]>([]);
@@ -21,6 +22,7 @@ const SudokuGrid = () => {
     row: number;
     col: number;
   } | null>(null);
+  const [win, setWin] = useState(0);
 
   //Refs to hold current grid and locked grid values
   const gridRef = useRef(grid);
@@ -76,9 +78,14 @@ const SudokuGrid = () => {
   //Handle check button click to compare grid with solved grid
   async function handleCheckClick() {
     let isCorrect: boolean = compareGrids(grid, solved);
-    await message(
-      isCorrect ? "Resuelto correctamente" : "Está mal, vuelve a intentarlo"
-    );
+    //await message(
+    //  isCorrect ? "Resuelto correctamente" : "Está mal, vuelve a intentarlo"
+    //);
+    if (isCorrect) {
+      setWin(1);
+      return;
+    }
+    setWin(2);
   }
 
   //Update grid and lockedGrid state
@@ -152,6 +159,7 @@ const SudokuGrid = () => {
   //JSX to render SudokuGrid component
   return (
     <div className="Container">
+      <CheckMessage winner={win} setWinner={setWin}></CheckMessage>
       <NavBar
         reset={handleResetClick}
         solve={handleSolveClick}

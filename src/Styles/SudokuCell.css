@@ -1,3 +1,7 @@
+*{
+  user-select: none;
+}
+
 :root {
   --background-white: white;
   --row-col-marked: #def3fa;
@@ -6,6 +10,7 @@
   --hint-color: rgb(145, 242, 145);
   --text-color: Black; 
 }
+
 
 [data-theme="dark"] {
   --background-white: #1f1f1f;
