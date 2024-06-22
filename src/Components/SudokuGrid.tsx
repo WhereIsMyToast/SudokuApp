@@ -4,6 +4,7 @@ import { invoke } from "@tauri-apps/api";
 import { message } from "@tauri-apps/api/dialog";
 import { listen } from "@tauri-apps/api/event";
 import { compareGrids, randomInt, testEmpty } from "../Util/Util";
+import { DarkModeToggle } from "./DarkModeToggle";
 
 const SudokuGrid = () => {
   //State hooks
@@ -151,6 +152,7 @@ const SudokuGrid = () => {
   //JSX to render SudokuGrid component
   return (
     <div>
+      <DarkModeToggle></DarkModeToggle>
       <table id="sudoku-grid">
         <tbody>{getGridElements(grid)}</tbody>
       </table>

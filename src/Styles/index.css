@@ -1,3 +1,17 @@
+:root{
+  --background-lightgray: #f7f7f7;
+  --borders-black: #000;
+  height: 100%;
+  width: 100%;
+}
+
+
+[data-theme="dark"]{
+  --background-lightgray: #1e1e1e;
+  --borders-black: #575757;
+}
+
+
 /* Styles for the body */
 body {
   display: flex; /* Use flexbox layout */
@@ -5,7 +19,7 @@ body {
   justify-content: center; /* Center items vertically */
   align-items: center; /* Center items horizontally */
   height: 90vh; /* Full viewport height */
-  background-color: #f7f7f7; /* Light gray background */
+  background-color: var(--background-lightgray); /* Light gray background */
   font-family: Arial, sans-serif; /* Use Arial or sans-serif font */
 }
 
@@ -18,7 +32,7 @@ table {
 
 /* Styles for table cells */
 td {
-  border: 1px solid #000; /* Black border around cells */
+  border: 1px solid var(--borders-black); /* Black border around cells */
   width: 40px; /* Fixed width for cells */
   height: 40px; /* Fixed height for cells */
   text-align: center; /* Center text horizontally */
@@ -39,12 +53,12 @@ td input {
 
 /* Additional styles for table cells with right border */
 .bold-border-right {
-  border-right: 2px solid #000; /* Bold right border */
+  border-right: 2px solid var(--borders-black); /* Bold right border */
 }
 
 /* Additional styles for table cells with bottom border */
 .bold-border-bottom {
-  border-bottom: 2px solid #000; /* Bold bottom border */
+  border-bottom: 2px solid var(--borders-black); /* Bold bottom border */
 }
 
 /* Styles for buttons */
@@ -54,6 +68,9 @@ button {
   font-size: 16px; /* Font size of button text */
   cursor: pointer; /* Cursor style on hover */
   margin: auto;
+  border: 1px solid var(--borders-black);
+  background-color: var(--background-lightgray);
+  border-radius: 7%;
 }
 
 #button-container{

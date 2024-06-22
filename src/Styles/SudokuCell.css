@@ -1,70 +1,85 @@
-/* Base styles for Sudoku cells */
-.sudoku-cell {
-  width: 40px; /* Fixed width */
-  height: 40px; /* Fixed height */
-  text-align: center; /* Center text horizontally */
-  vertical-align: middle; /* Center content vertically */
-  background-color:  white; /* Default background color */
+:root {
+  --background-white: white;
+  --row-col-marked: #def3fa;
+  --locked-gray: #dbdbdb;
+  --cell-marked: #7bc9e3;
+  --hint-color: rgb(145, 242, 145);
+  --text-color: Black; 
 }
 
-/* Common border styles for Sudoku cells */
+[data-theme="dark"] {
+  --background-white: #1f1f1f;
+  --row-col-marked: #1a3a4a;
+  --locked-gray: #2b2b2c;
+  --cell-marked: #1c6b82;
+  --hint-color: rgb(0, 153, 0);
+  --text-color: #cacaca;
+}
+
+body {
+  transition: all 0.3s ease-in-out;
+}
+
+body, input, button {
+  color: var(--text-color);
+}
+
+input, div {
+  background-color: inherit;
+}
+
+/* Base styles for Sudoku cells */
 .sudoku-cell {
-  border-right-width: 1px; /* Default right border width */
-  border-bottom-width: 1px; /* Default bottom border width */
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: var(--background-white);
+  border-right: 1px solid;
+  border-bottom: 1px solid;
 }
 
 /* Additional styles for cells at the end of rows and columns */
 .sudoku-cell.last-in-row {
-  border-right-width: 1px; /* Right border for cells at the end of rows */
+  border-right-width: 1px;
 }
 
 .sudoku-cell.last-in-column {
-  border-bottom-width: 1px; /* Bottom border for cells at the end of columns */
+  border-bottom-width: 1px;
 }
 
 /* Additional styles for cells with thicker borders */
 .sudoku-cell.thick-border-right {
-  border-right-width: 2px; /* Thicker right border */
+  border-right-width: 2px;
 }
 
 .sudoku-cell.thick-border-bottom {
-  border-bottom-width: 2px; /* Thicker bottom border */
+  border-bottom-width: 2px;
 }
 
 /* Styles for cells marked as part of a row or column */
 .rowColmarked {
-  background-color: #def3fa; /* Light blue background */
-}
-
-/* Styles for input elements */
-input {
-  background-color: inherit; /* Inherit background color */
-}
-
-/* Styles for div elements */
-div {
-  background-color: inherit; /* Inherit background color */
+  background-color: var(--row-col-marked);
 }
 
 /* Styles for locked cells */
 .locked {
-  background-color: #dbdbdb; /* Light gray background */
+  background-color: var(--locked-gray);
 }
 
 /* Styles for locked cells that are also marked */
 .rowColmarked.locked {
-  background-color: #dbdbdb; /* Light gray background */
+  background-color: var(--locked-gray);
 }
 
 /* Styles for cells that are marked */
 .marked {
-  background-color: #7bc9e3; /* Blue background */
+  background-color: var(--cell-marked);
 }
-
 
 @keyframes hintAnimation {
   from {
-    background-color: rgb(145, 242, 145);
+    background-color: var(--hint-color);
   }
   to {
     background-color: transparent;
@@ -72,5 +87,5 @@ div {
 }
 
 .hint {
-  animation: hintAnimation 1s forwards;
+  animation: hintAnimation 1s ease-in-out forwards;
 }
