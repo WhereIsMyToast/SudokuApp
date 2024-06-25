@@ -1,9 +1,12 @@
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
 
-export function DarkModeToggle() {
-  const [mode, setMode] = useState(0);
+interface DarkModeToggleProps {
+  mode: number;
+  setMode: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const DarkModeToggle: React.FC<DarkModeToggleProps> = ({ mode, setMode }) => {
   function toggleMode() {
     if (mode == 0) {
       setMode(1);
@@ -29,4 +32,6 @@ export function DarkModeToggle() {
       title="Toggle theme"
     ></FontAwesomeIcon>
   );
-}
+};
+
+export default DarkModeToggle;

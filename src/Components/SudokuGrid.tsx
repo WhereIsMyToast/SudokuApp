@@ -24,6 +24,7 @@ const SudokuGrid = () => {
   } | null>(null);
   const [win, setWin] = useState(0);
 
+  const [mode, setMode] = useState(0);
   //Refs to hold current grid and locked grid values
   const gridRef = useRef(grid);
   const gridLockRef = useRef(lockedGrid);
@@ -161,6 +162,8 @@ const SudokuGrid = () => {
     <div className="Container">
       <CheckMessage winner={win} setWinner={setWin}></CheckMessage>
       <NavBar
+        mode={mode}
+        setMode={setMode}
         reset={handleResetClick}
         solve={handleSolveClick}
         hint={handleHintClick}
