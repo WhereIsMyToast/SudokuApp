@@ -58,6 +58,10 @@ Or solve it yourself, and check if the soultion is right.
 - - [x] Remake the ui
 - [ ] Remake the saving system
 
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
 ### Contributing
 
 We welcome contributions and ideas of how to upgrade the proyect!
