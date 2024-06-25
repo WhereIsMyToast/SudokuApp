@@ -49,6 +49,15 @@ Launch the application and generate a new Sudoku puzzle.
 Utilize the solving feature to get immediate solutions for any valid Sudoku board.
 Or solve it yourself, and check if the soultion is right.
 
+## Saving system
+
+The saving system is another of my proyects, its published on my github.
+https://github.com/WhereIsMyToast/jsonStructDB
+
+JsonStructDB is a lightweight library designed to simplify saving and retrieving data as JSON in files within the app data directory. This is especially useful for applications that require straightforward data persistence without the overhead of a full-fledged database.
+
+Feel free to check it out.
+
 ## Future changes
 
 - [x] Fix frontend
@@ -56,7 +65,7 @@ Or solve it yourself, and check if the soultion is right.
 - - [x] Add animation on hints
 - [x] Dark mode
 - - [x] Remake the ui
-- [ ] Remake the saving system
+- [x] Remake the saving system
 
 ## License
 

@@ -28,30 +28,40 @@ const SudokuGrid = () => {
   //Refs to hold current grid and locked grid values
   const gridRef = useRef(grid);
   const gridLockRef = useRef(lockedGrid);
-
+  const modeRef = useRef(mode);
   //Update refs when grid or lockedGrid changes
   useEffect(() => {
     gridRef.current = grid;
     gridLockRef.current = lockedGrid;
-  }, [grid, lockedGrid]);
+    modeRef.current = mode;
+  }, [grid, lockedGrid, mode]);
+
+  interface Data {
+    grid: number[][];
+    locked_grid: boolean[][];
+    mode: number;
+  }
 
   //Fetch initial data on component mount
   useEffect(() => {
     async function fetchData() {
-      const data: number[][] = await invoke("get_grid", {});
-      setGrid(data);
+      const data: Data = await invoke("get_data", {});
+      setGrid(data.grid);
+      setLockedGrid(data.locked_grid);
+      setMode(data.mode);
       const solvedData: number[][] = await invoke("solve_grid", { grid: data });
       setSolved(solvedData);
-      const lockedData: boolean[][] = await invoke("get_locked_grid", {});
-      setLockedGrid(lockedData);
     }
     fetchData();
 
-    //Listen for save-grid event to save grid and lockedGrid
+    //Listen for save event to save grid and lockedGrid
     async function addListen() {
-      await listen("save-grid", async () => {
-        await invoke("save_grid", { grid: gridRef.current });
-        await invoke("save_locked_grid", { grid: gridLockRef.current });
+      await listen("save", async () => {
+        await invoke("save_data", {
+          grid: gridRef.current,
+          lockedGrid: gridLockRef.current,
+          mode: modeRef.current,
+        });
         window.close();
       });
     }

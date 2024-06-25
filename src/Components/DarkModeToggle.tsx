@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
+import { useEffect } from "react";
 
 interface DarkModeToggleProps {
   mode: number;
@@ -7,6 +8,14 @@ interface DarkModeToggleProps {
 }
 
 const DarkModeToggle: React.FC<DarkModeToggleProps> = ({ mode, setMode }) => {
+  useEffect(() => {
+    if (mode == 0) {
+      setLightMode();
+    }
+    if (mode == 1) {
+      setDarkMode();
+    }
+  }, [mode]);
   function toggleMode() {
     if (mode == 0) {
       setMode(1);

@@ -4,19 +4,42 @@
     windows_subsystem = "windows"
 )]
 
-use serde::Serialize;
+use json_struct_db::{self, JsonConverter};
+use serde::{Deserialize, Serialize};
 use solver::{Grid, NewGridsData};
-use std::fs::OpenOptions;
-use std::io::Result;
+
 use std::sync::{Mutex, Once};
-use std::{
-    fs::File,
-    io::{BufReader, BufWriter, Write},
-};
-use tauri::api::path::data_dir;
+
 use tauri::WindowEvent;
 
 mod solver;
+
+#[derive(Serialize, Deserialize)]
+struct Data {
+    grid: [[u8; 9]; 9],
+    locked_grid: [[bool; 9]; 9],
+    mode: u8,
+}
+
+impl Data {
+    fn new() -> Self {
+        Data {
+            grid: [[0; 9]; 9],
+            locked_grid: [[false; 9]; 9],
+            mode: 0,
+        }
+    }
+}
+
+impl json_struct_db::JsonConverter for Data {
+    fn to_json(&self) -> String {
+        serde_json::to_string(self).expect("Failed to serialize MyData")
+    }
+
+    fn from_json(json: String) -> Self {
+        serde_json::from_str(&json).expect("Failed to deserialize MyData")
+    }
+}
 
 //Command to solve the provided Sudoku grid
 #[tauri::command]
@@ -31,43 +54,30 @@ fn solve_grid(grid: [[u8; 9]; 9]) -> [[u8; 9]; 9] {
 
 //Command to save the current Sudoku grid to a file
 #[tauri::command]
-fn save_grid(grid: [[u8; 9]; 9]) {
-    let mut path: String = get_appdata();
-    path.push_str("/last_grid");
-    let _ = write_file(grid, path);
-}
-
-//Command to save the locked cells of the Sudoku grid to a file
-#[tauri::command]
-fn save_locked_grid(grid: [[bool; 9]; 9]) {
-    let mut path: String = get_appdata();
-    path.push_str("/last_grid_locked");
-    let _ = write_file(grid, path);
-}
-
-//Command to retrieve the last saved Sudoku grid from a file
-#[tauri::command]
-fn get_grid() -> [[u8; 9]; 9] {
-    let mut path: String = get_appdata();
-    path.push_str("/last_grid");
-    match read_file::<u8>(&path) {
-        Err(_) => {
-            return [[0; 9]; 9]; //Return an empty grid on error
+fn save_data(grid: [[u8; 9]; 9], locked_grid: [[bool; 9]; 9], mode: u8) {
+    let data: Data = Data {
+        grid: grid,
+        locked_grid: locked_grid,
+        mode: mode,
+    };
+    match json_struct_db::save(data, "sudoku_data") {
+        Ok(path) => {
+            println!("Data saved to {}", path)
         }
-        Ok(grid) => grid,
-    }
+        Err(e) => {
+            println!("{}", e)
+        }
+    };
 }
 
-//Command to retrieve the last saved locked cells of the Sudoku grid from a file
 #[tauri::command]
-fn get_locked_grid() -> [[bool; 9]; 9] {
-    let mut path: String = get_appdata();
-    path.push_str("/last_grid_locked");
-    match read_file::<bool>(&path) {
-        Err(_) => {
-            return [[false; 9]; 9]; //Return an empty locked grid on error
+fn get_data() -> Data {
+    match json_struct_db::read("sudoku_data") {
+        Ok(data) => return Data::from_json(data),
+        Err(e) => {
+            println!("{}", e.message);
+            return Data::new();
         }
-        Ok(grid) => grid,
     }
 }
 
@@ -100,42 +110,6 @@ fn generate_new_grid() -> [[u8; 9]; 9] {
     }
 }
 
-//Function to write a grid to a file
-fn write_file<T: Serialize>(g: [[T; 9]; 9], f: String) -> Result<()> {
-    let file = OpenOptions::new()
-        .write(true)
-        .create(true)
-        .truncate(true)
-        .open(f)?;
-    let mut writer = BufWriter::new(file);
-    serde_json::to_writer(&mut writer, &g)?;
-    writer.flush()?;
-    Ok(())
-}
-
-//Function to read a grid from a file
-fn read_file<T: serde::de::DeserializeOwned>(file_dir: &str) -> Result<[[T; 9]; 9]> {
-    let file: File = match File::open(file_dir) {
-        Err(_) => File::create(file_dir)?,
-        Ok(file) => file,
-    };
-
-    let reader = BufReader::new(file);
-    let grid: [[T; 9]; 9] = serde_json::from_reader(reader)?;
-    Ok(grid)
-}
-
-//Function to get the application data directory
-fn get_appdata() -> String {
-    match data_dir() {
-        Some(dir) => match dir.to_str() {
-            None => String::new(),
-            Some(d) => String::from(d),
-        },
-        None => String::new(),
-    }
-}
-
 //Main function to initialize the application and set up Tauri commands
 fn main() {
     get_singleton();
@@ -143,16 +117,14 @@ fn main() {
         .on_window_event(|event| match event.event() {
             WindowEvent::CloseRequested { api, .. } => {
                 api.prevent_close();
-                event.window().emit("save-grid", "").unwrap();
+                event.window().emit("save", "").unwrap();
             }
             _ => {}
         })
         .invoke_handler(tauri::generate_handler![
             solve_grid,
-            save_grid,
-            get_grid,
-            get_locked_grid,
-            save_locked_grid,
+            save_data,
+            get_data,
             generate_new_grid
         ])
         .run(tauri::generate_context!())
