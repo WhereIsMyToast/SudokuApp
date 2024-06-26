@@ -4,10 +4,10 @@ import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 
 interface CheckMessageProps {
   winner: number;
-  setWinner: React.Dispatch<React.SetStateAction<number>>;
+  setWinner: (Winner: number) => void;
 }
 
-const CheckMessage: React.FC<CheckMessageProps> = ({ winner, setWinner }) => {
+const CheckMessage = ({ winner, setWinner }: CheckMessageProps) => {
   function getClasses() {
     if (winner == 0) {
       return "Cont none";

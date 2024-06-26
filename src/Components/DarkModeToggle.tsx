@@ -4,10 +4,10 @@ import { useEffect } from "react";
 
 interface DarkModeToggleProps {
   mode: number;
-  setMode: React.Dispatch<React.SetStateAction<number>>;
+  setMode: (mode: number) => void;
 }
 
-const DarkModeToggle: React.FC<DarkModeToggleProps> = ({ mode, setMode }) => {
+const DarkModeToggle = ({ mode, setMode }: DarkModeToggleProps) => {
   useEffect(() => {
     if (mode == 0) {
       setLightMode();

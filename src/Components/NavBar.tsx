@@ -10,16 +10,9 @@ interface NavBarProps {
   hint: Function;
   check: Function;
   mode: number;
-  setMode: React.Dispatch<React.SetStateAction<number>>;
+  setMode: (mode: number) => void;
 }
-const NavBar: React.FC<NavBarProps> = ({
-  reset,
-  solve,
-  hint,
-  check,
-  mode,
-  setMode,
-}) => {
+const NavBar = ({ reset, solve, hint, check, mode, setMode }: NavBarProps) => {
   return (
     <div className="NavBar">
       <DarkModeToggle mode={mode} setMode={setMode}></DarkModeToggle>

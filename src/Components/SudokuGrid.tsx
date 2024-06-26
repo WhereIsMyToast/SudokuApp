@@ -7,14 +7,13 @@ import { compareGrids, randomInt, testEmpty } from "../Util/Util";
 import NavBar from "./NavBar";
 import "../Styles/SudokuGrid.css";
 import CheckMessage from "./CheckMessage";
+
 const SudokuGrid = () => {
-  //State hooks
   const [grid, setGrid] = useState<number[][]>([]);
   const [solved, setSolved] = useState<number[][]>([]);
-  const initialLockedGrid = Array.from({ length: 9 }, () =>
-    Array(9).fill(false)
+  const [lockedGrid, setLockedGrid] = useState<boolean[][]>(
+    Array.from({ length: 9 }, () => Array(9).fill(false))
   );
-  const [lockedGrid, setLockedGrid] = useState<boolean[][]>(initialLockedGrid);
   const [marked, setMarked] = useState(0);
   const [rowMarked, setRowMarked] = useState(0);
   const [colMarked, setColMarked] = useState(0);
@@ -23,13 +22,12 @@ const SudokuGrid = () => {
     col: number;
   } | null>(null);
   const [win, setWin] = useState(0);
-
   const [mode, setMode] = useState(0);
-  //Refs to hold current grid and locked grid values
+
   const gridRef = useRef(grid);
   const gridLockRef = useRef(lockedGrid);
   const modeRef = useRef(mode);
-  //Update refs when grid or lockedGrid changes
+
   useEffect(() => {
     gridRef.current = grid;
     gridLockRef.current = lockedGrid;
@@ -42,20 +40,19 @@ const SudokuGrid = () => {
     mode: number;
   }
 
-  //Fetch initial data on component mount
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const data: Data = await invoke("get_data", {});
       setGrid(data.grid);
       setLockedGrid(data.locked_grid);
       setMode(data.mode);
-      const solvedData: number[][] = await invoke("solve_grid", { grid: data });
+      const solvedData: number[][] = await invoke("solve_grid", {
+        grid: data.grid,
+      });
       setSolved(solvedData);
-    }
-    fetchData();
+    };
 
-    //Listen for save event to save grid and lockedGrid
-    async function addListen() {
+    const addListen = async () => {
       await listen("save", async () => {
         await invoke("save_data", {
           grid: gridRef.current,
@@ -64,100 +61,81 @@ const SudokuGrid = () => {
         });
         window.close();
       });
-    }
-    addListen();
-  }, []); //Empty dependency array ensures useEffect runs only on mount
+    };
 
-  //Reset grid to initial state
-  async function handleResetClick() {
-    let newGrid: number[][] = await fetchGrid();
+    fetchData();
+    addListen();
+  }, []);
+
+  const handleResetClick = async () => {
+    const newGrid: number[][] = await fetchGrid();
     if (testEmpty(newGrid)) {
       await message("Vuelve a intentarlo");
       return;
     }
     updateGrid(newGrid);
-    let s: number[][] = await invoke("solve_grid", { grid: newGrid });
-    setSolved(s);
-  }
+    const solvedData: number[][] = await invoke("solve_grid", {
+      grid: newGrid,
+    });
+    setSolved(solvedData);
+  };
 
-  //Fetch a new grid from backend
-  async function fetchGrid() {
+  const fetchGrid = async () => {
     let grid: number[][] = await invoke("generate_new_grid", {});
     return grid;
-  }
+  };
 
-  //Handle check button click to compare grid with solved grid
-  async function handleCheckClick() {
-    let isCorrect: boolean = compareGrids(grid, solved);
-    //await message(
-    //  isCorrect ? "Resuelto correctamente" : "Está mal, vuelve a intentarlo"
-    //);
-    if (isCorrect) {
-      setWin(1);
-      return;
-    }
-    setWin(2);
-  }
+  const handleCheckClick = async () => {
+    const isCorrect = compareGrids(grid, solved);
+    setWin(isCorrect ? 1 : 2);
+  };
 
-  //Update grid and lockedGrid state
-  function updateGrid(g: number[][]) {
-    let empt = Array.from({ length: 9 }, () => Array(9).fill(0));
-    setGrid(empt);
-    setGrid(g);
-    const newLockedGrid = g.map((row: number[]) =>
-      row.map((cell: number) => cell !== 0)
-    );
-    setLockedGrid(newLockedGrid);
-  }
+  const updateGrid = (newGrid: number[][]) => {
+    setGrid(Array.from({ length: 9 }, () => Array(9).fill(0)));
+    setGrid(newGrid);
+    setLockedGrid(newGrid.map((row) => row.map((cell) => cell !== 0)));
+  };
 
-  //Update grid with solved grid values
-  function updateSolveGrid(g: number[][]) {
-    let empt = Array.from({ length: 9 }, () => Array(9).fill(0));
-    setGrid(empt);
-    setGrid(g);
-  }
+  const handleSolveClick = async () => {
+    updateGrid(solved);
+  };
 
-  //Handle solve button click
-  async function handleSolveClick() {
-    updateSolveGrid(solved);
-  }
+  const handleHintClick = (tries: number) => {
+    if (tries > 81) return;
+    const i = randomInt(9);
+    const j = randomInt(9);
 
-  function handleHintClick(tries: number) {
-    let i: number = randomInt(9);
-    let j: number = randomInt(9);
-    if (tries > 81) {
-      return;
-    }
     if (grid[i][j] === 0) {
-      let temp = [...grid];
-      temp[i][j] = solved[i][j];
-      setGrid(temp);
+      const tempGrid = [...grid];
+      tempGrid[i][j] = solved[i][j];
+      setGrid(tempGrid);
       setHintedCell({ row: i, col: j });
-      setTimeout(() => {
-        setHintedCell(null);
-      }, 500);
-      return;
+      setTimeout(() => setHintedCell(null), 500);
+    } else {
+      handleHintClick(tries + 1);
     }
-    handleHintClick(++tries);
-  }
+  };
 
-  //Render SudokuCell components based on grid state
-  function getGridElements(grid: number[][]) {
-    return grid.map((row, i) => (
-      <tr key={`row-${i}`}>
-        {row.map((cell, j) => (
+  const getGridElements = (grid: number[][]) => {
+    const markedState = {
+      marked,
+      setMarked,
+      rowMarked,
+      setRowMarked,
+      colMarked,
+      setColMarked,
+    };
+
+    return grid.map((row, rowIndex) => (
+      <tr key={`row-${rowIndex}`}>
+        {row.map((cell, colIndex) => (
           <SudokuCell
-            colMarked={colMarked}
-            rowMarked={rowMarked}
-            setColMarked={setColMarked}
-            setRowMarked={setRowMarked}
-            marked={marked}
-            setMarked={setMarked}
-            key={`cell-${i}-${j}`}
+            markedState={markedState}
+            key={`cell-${rowIndex}-${colIndex}`}
             number={cell}
-            col={j}
-            row={i}
-            locked={lockedGrid[i][j]}
+            col={colIndex}
+            row={rowIndex}
+            locked={lockedGrid[rowIndex][colIndex]}
             grid={grid}
             setGrid={setGrid}
             hinted={hintedCell}
@@ -165,12 +143,11 @@ const SudokuGrid = () => {
         ))}
       </tr>
     ));
-  }
+  };
 
-  //JSX to render SudokuGrid component
   return (
     <div className="Container">
-      <CheckMessage winner={win} setWinner={setWin}></CheckMessage>
+      <CheckMessage winner={win} setWinner={setWin} />
       <NavBar
         mode={mode}
         setMode={setMode}
@@ -178,7 +155,7 @@ const SudokuGrid = () => {
         solve={handleSolveClick}
         hint={handleHintClick}
         check={handleCheckClick}
-      ></NavBar>
+      />
       <table id="sudoku-grid">
         <tbody>{getGridElements(grid)}</tbody>
       </table>

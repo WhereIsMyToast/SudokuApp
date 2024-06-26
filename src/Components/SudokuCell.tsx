@@ -7,38 +7,32 @@ interface SudokuCellProps {
   row: number;
   locked: boolean;
   grid: number[][];
-  setGrid: React.Dispatch<React.SetStateAction<number[][]>>;
-  marked: number;
-  setMarked: React.Dispatch<React.SetStateAction<number>>;
-  rowMarked: number;
-  setRowMarked: React.Dispatch<React.SetStateAction<number>>;
-  colMarked: number;
-  setColMarked: React.Dispatch<React.SetStateAction<number>>;
+  setGrid: (grid: number[][]) => void;
+  markedState: {
+    marked: number;
+    setMarked: (marked: number) => void;
+    rowMarked: number;
+    setRowMarked: (rowMarked: number) => void;
+    colMarked: number;
+    setColMarked: (colMarked: number) => void;
+  };
   hinted: { col: number; row: number } | null;
 }
 
-const SudokuCell: React.FC<SudokuCellProps> = ({
+const SudokuCell = ({
   number,
   col,
   row,
   locked,
   grid,
   setGrid,
-  marked,
-  setMarked,
-  rowMarked,
-  setRowMarked,
-  colMarked,
-  setColMarked,
+  markedState,
   hinted,
-}) => {
-  //Function to determine the content inside the cell
+}: SudokuCellProps) => {
   function getInside() {
     if (locked) {
-      //Display locked numbers as text
       return <div onClick={handleClick}>{number}</div>;
     } else {
-      //Allow input for non-locked cells
       return (
         <input
           type="text"
@@ -52,33 +46,31 @@ const SudokuCell: React.FC<SudokuCellProps> = ({
     }
   }
 
-  //Handle click on the cell to mark it and its row/column
   function handleClick() {
-    setMarked(number);
-    setRowMarked(row);
-    setColMarked(col);
+    markedState.setMarked(number);
+    markedState.setRowMarked(row);
+    markedState.setColMarked(col);
   }
 
-  //Handle change in input value (for non-locked cells)
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const value: number = +event.target.value;
     if (Number.isNaN(value)) {
       return;
     }
-    //Update the grid state with the new value
+
     let temp = [...grid];
     temp[row] = [...temp[row]];
     temp[row][col] = value;
     setGrid(temp);
   }
 
-  //Determine dynamic classNames based on cell's properties
   const isLastInRow = col === 8;
   const isLastInColumn = row === 8;
   const isThickBorderRight = (col + 1) % 3 === 0 && !isLastInRow;
   const isThickBorderBottom = (row + 1) % 3 === 0 && !isLastInColumn;
-  const isMarked = number === marked;
-  const isRowColMarked = row === rowMarked || col === colMarked;
+  const isMarked = number === markedState.marked;
+  const isRowColMarked =
+    row === markedState.rowMarked || col === markedState.colMarked;
 
   function isHinted() {
     if (hinted == null) {
@@ -93,7 +85,6 @@ const SudokuCell: React.FC<SudokuCellProps> = ({
     return true;
   }
 
-  //Construct the className string based on conditions
   const cellClassName = `sudoku-cell${isLastInRow ? " last-in-row" : ""}${
     isLastInColumn ? " last-in-column" : ""
   }${isThickBorderRight ? " thick-border-right" : ""}${
@@ -102,7 +93,6 @@ const SudokuCell: React.FC<SudokuCellProps> = ({
     isMarked && number ? " marked" : ""
   }${isRowColMarked ? " rowColmarked" : ""}${isHinted() ? " hint" : ""}`;
 
-  //Render the cell with appropriate className and content
   return <td className={cellClassName}>{getInside()}</td>;
 };
 
